@@ -4,7 +4,6 @@
     int yylex(void);
     void yyerror(const char *);
     
-    #define YYSTYPE double
 %}
 
 %token NUM
@@ -21,7 +20,7 @@ input:
 
 line:
   '\n'
-| exp '\n'      { printf("%.10g\n", $1); }
+| exp '\n'      { printf("%d\n", $1); }
 
 exp:
   NUM           { $$ = $1; }
@@ -41,10 +40,10 @@ int yylex (void)
     while ((c = getchar ()) == ' ' || c == '\t')
         continue;
 
-    if (c == '.' || isdigit (c))
+    if (isdigit (c))
     {
         ungetc (c, stdin);
-        scanf ("%lf", &yylval);
+        scanf ("%d", &yylval);
         return NUM;
     }
 

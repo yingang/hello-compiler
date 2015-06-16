@@ -75,11 +75,10 @@
     int yylex(void);
     void yyerror(const char *);
     
-    #define YYSTYPE double
 
 
 /* Line 189 of yacc.c  */
-#line 83 "calc2.tab.c"
+#line 82 "calc2.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -124,7 +123,7 @@ typedef int YYSTYPE;
 
 
 /* Line 264 of yacc.c  */
-#line 128 "calc2.tab.c"
+#line 127 "calc2.tab.c"
 
 #ifdef short
 # undef short
@@ -409,8 +408,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    17,    17,    19,    23,    24,    27,    28,    29,    30,
-      31,    32
+       0,    16,    16,    18,    22,    23,    26,    27,    28,    29,
+      30,    31
 };
 #endif
 
@@ -1316,56 +1315,56 @@ yyreduce:
         case 5:
 
 /* Line 1455 of yacc.c  */
-#line 24 "calc2.y"
-    { printf("%.10g\n", (yyvsp[(1) - (2)])); ;}
+#line 23 "calc2.y"
+    { printf("%d\n", (yyvsp[(1) - (2)])); ;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 27 "calc2.y"
+#line 26 "calc2.y"
     { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 28 "calc2.y"
+#line 27 "calc2.y"
     { (yyval) = (yyvsp[(1) - (3)]) + (yyvsp[(3) - (3)]); ;}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 29 "calc2.y"
+#line 28 "calc2.y"
     { (yyval) = (yyvsp[(1) - (3)]) - (yyvsp[(3) - (3)]); ;}
     break;
 
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 30 "calc2.y"
+#line 29 "calc2.y"
     { (yyval) = (yyvsp[(1) - (3)]) * (yyvsp[(3) - (3)]); ;}
     break;
 
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 31 "calc2.y"
+#line 30 "calc2.y"
     { (yyval) = (yyvsp[(1) - (3)]) / (yyvsp[(3) - (3)]); ;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 32 "calc2.y"
+#line 31 "calc2.y"
     { (yyval) = (yyvsp[(2) - (3)]); ;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 1369 "calc2.tab.c"
+#line 1368 "calc2.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1577,7 +1576,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 35 "calc2.y"
+#line 34 "calc2.y"
 
 
 int yylex (void)
@@ -1587,10 +1586,10 @@ int yylex (void)
     while ((c = getchar ()) == ' ' || c == '\t')
         continue;
 
-    if (c == '.' || isdigit (c))
+    if (isdigit (c))
     {
         ungetc (c, stdin);
-        scanf ("%lf", &yylval);
+        scanf ("%d", &yylval);
         return NUM;
     }
 
