@@ -1,3 +1,3 @@
 exer2.out: exer2.l
-	flex exer2.l
-  gcc -o exer2.out exer2.c
+	flex -o exer2.c exer2.l
+	gcc exer2.c -lfl -o exer2.out
