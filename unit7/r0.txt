@@ -1,0 +1,9 @@
+{
+  int a;
+  bool b;
+
+  printi (a);
+  printb (b);
+  a = a / 2 + 3 * a - 6;
+  b = b && true || false;
+}

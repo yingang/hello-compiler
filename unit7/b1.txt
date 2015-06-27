@@ -1,0 +1,5 @@
+{
+  int a;
+  
+  printb (b);
+}
