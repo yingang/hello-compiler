@@ -57,8 +57,139 @@ void check_decs(List_t decs)
 // Your job:
 Type_t check_exp (Exp_t exp)
 {
-  TODO();
-  return 0;
+  switch (exp->kind)
+  {
+    case EXP_INT: {
+      Exp_Int p = (Exp_Int)exp;
+      return TYPE_INT;
+    }
+    case EXP_TRUE: {
+      Exp_True p = (Exp_True)exp;
+      return TYPE_BOOL;
+    }
+    case EXP_FALSE: {
+      Exp_False p = (Exp_False)exp;
+      return TYPE_BOOL;
+    }
+    case EXP_ID: {
+      Exp_Id p = (Exp_Id)exp;
+      Type_t type = Table_lookup(p->id);
+  	  if (type == -1) {
+  	    fprintf (stderr, "Error R1: the id "
+	        "\"%s\" has not been declared\n", p->id);
+	      exit(0);
+  	  }
+  	  return type;
+    }
+    case EXP_ADD: {
+      Exp_Add p = (Exp_Add)exp;
+      Type_t type_left = check_exp(p->left);
+      if (type_left != TYPE_INT) {
+        fprintf (stderr, "Error R6: the left of '+' is not INT (");
+        Exp_print (p->left);
+        printf (")\n");
+        exit(0);
+      }
+      Type_t type_right = check_exp(p->right);
+      if (type_right != TYPE_INT) {
+        fprintf (stderr, "Error R6: the right of '+' is not INT (");
+        Exp_print (p->right);
+        printf (")\n");
+        exit(0);
+      }
+      return TYPE_INT;
+    }
+    case EXP_SUB: {
+      Exp_Sub p = (Exp_Sub)exp;
+      Type_t type_left = check_exp(p->left);
+      if (type_left != TYPE_INT) {
+        fprintf (stderr, "Error R6: the left of '-' is not INT (");
+        Exp_print (p->left);
+        printf (")\n");
+        exit(0);
+      }
+      Type_t type_right = check_exp(p->right);
+      if (type_right != TYPE_INT) {
+        fprintf (stderr, "Error R6: the right of '-' is not INT (");
+        Exp_print (p->right);
+        printf (")\n");
+        exit(0);
+      }
+      return TYPE_INT;
+    }
+    case EXP_TIMES: {
+      Exp_Times p = (Exp_Times)exp;
+      Type_t type_left = check_exp(p->left);
+      if (type_left != TYPE_INT) {
+        fprintf (stderr, "Error R6: the left of '*' is not INT (");
+        Exp_print (p->left);
+        printf (")\n");
+        exit(0);
+      }
+      Type_t type_right = check_exp(p->right);
+      if (type_right != TYPE_INT) {
+        fprintf (stderr, "Error R6: the right of '*' is not INT (");
+        Exp_print (p->right);
+        printf (")\n");
+        exit(0);
+      }
+      return TYPE_INT;
+    }
+    case EXP_DIVIDE: {
+      Exp_Divide p = (Exp_Divide)exp;
+      Type_t type_left = check_exp(p->left);
+      if (type_left != TYPE_INT) {
+        fprintf (stderr, "Error R6: the left of '/' is not INT (");
+        Exp_print (p->left);
+        printf (")\n");
+        exit(0);
+      }
+      Type_t type_right = check_exp(p->right);
+      if (type_right != TYPE_INT) {
+        fprintf (stderr, "Error R6: the right of '/' is not INT (");
+        Exp_print (p->right);
+        printf (")\n");
+        exit(0);
+      }
+      return TYPE_INT;
+    }
+    case EXP_AND: {
+      Exp_And p = (Exp_And)exp;
+      Type_t type_left = check_exp(p->left);
+      if (type_left != TYPE_BOOL) {
+        fprintf (stderr, "Error R7: the left of '&&' is not BOOL (");
+        Exp_print (p->left);
+        printf (")\n");
+        exit(0);
+      }
+      Type_t type_right = check_exp(p->right);
+      if (type_right != TYPE_BOOL) {
+        fprintf (stderr, "Error R7: the right of '&&' is not BOOL (");
+        Exp_print (p->right);
+        printf (")\n");
+        exit(0);
+      }
+      return TYPE_BOOL;
+    }
+    case EXP_OR: {
+      Exp_Or p = (Exp_Or)exp;
+      Type_t type_left = check_exp(p->left);
+      if (type_left != TYPE_BOOL) {
+        fprintf (stderr, "Error R7: the left of '||' is not BOOL (");
+        Exp_print (p->left);
+        printf (")\n");
+        exit(0);
+      }
+      Type_t type_right = check_exp(p->right);
+      if (type_right != TYPE_BOOL) {
+        fprintf (stderr, "Error R7: the right of '||' is not BOOL (");
+        Exp_print (p->right);
+        printf (")\n");
+        exit(0);
+      }
+      return TYPE_BOOL;
+    }
+  }
 }
 
 ////////////////////////////////////////
@@ -67,7 +198,58 @@ Type_t check_exp (Exp_t exp)
 // Your job:
 void check_stm (Stm_t stm)
 {
-  TODO();
+  switch (stm->kind)
+  {
+  	case STM_ASSIGN: {
+  	  Stm_Assign p = (Stm_Assign)stm;
+
+  	  Type_t type_left = Table_lookup(p->id);
+  	  printf("%d", type_left);
+  	  
+  	  if (type_left == -1) {
+  	    fprintf (stderr, "Error R1: the id "
+	      "\"%s\" has not been declared\n", p->id);
+	    exit(0);
+  	  }
+  	  
+  	  Type_t type_right = check_exp(p->exp);
+
+  	  if (type_left != type_right) {
+  	    fprintf (stderr, "Error R3: the id "
+	      "\"%s\" has different type with ", p->id);
+	    Exp_print (p->exp);
+	    printf ("\n");
+	    exit(0);
+  	  }
+  	  break;
+  	}
+  	case STM_PRINTI: {
+  	  Stm_Printi p = (Stm_Printi)stm;
+  	  
+  	  Type_t type = check_exp(p->exp);
+  	  
+  	  if (type != TYPE_INT) {
+  	    fprintf (stderr, "Error R4: the input to printi is not INT, ");
+        Exp_print (p->exp);
+        printf("\n");
+        exit(0);
+  	  }
+  	  break;
+  	}
+  	case STM_PRINTB: {
+  	  Stm_Printb p = (Stm_Printb)stm;
+  	  
+  	  Type_t type = check_exp(p->exp);
+  	  
+  	  if (type != TYPE_BOOL) {
+  	    fprintf (stderr, "Error R5: the input to printb is not BOOL, ");
+        Exp_print (p->exp);
+        printf("\n");
+        exit(0);
+  	  }
+  	  break;
+  	}
+  }
 }
 
 void check_stms(List_t stms)
@@ -78,7 +260,6 @@ void check_stms(List_t stms)
     stms = stms->next;
   }
   return;
-  TODO();
 }
 
 
