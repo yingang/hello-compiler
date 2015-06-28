@@ -43,8 +43,8 @@ int main (int argc, char **argv)
   //system("cat temp.s");
 
   printf ("executable generation starting...\n");
-  system ("gcc -o stack.exe temp.s");
-  printf ("executable generation finished (writing to file \"stack.exe\")\n");
+  system ("gcc -m32 -o stack.out temp.s");
+  printf ("executable generation finished (writing to file \"stack.out\")\n");
 
   return 0;
 }
