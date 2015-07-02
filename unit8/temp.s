@@ -17,9 +17,11 @@ main:
 	pushl	%ebp
 	movl	%esp, %ebp
 	pushl	$88
-
+	call	printi
+	addl	$4, %esp
 	pushl	$1
-
+	call	printb
+	addl	$4, %esp
 	leave
 	ret
 	.globl printi
